@@ -3,10 +3,10 @@ import Link from "next/link";
 interface DiscoverTabContentProps {
   title: string;
   path: string;
-  CardComponent: React.ReactNode;
+  Slider?: React.ReactNode;
 }
 
-export default function DiscoverTabContent({ title, path, CardComponent }: DiscoverTabContentProps) {
+export default function DiscoverTabContent({ title, path, Slider }: DiscoverTabContentProps) {
   return (
     <>
       <div className="flex items-center justify-between font-bold pt-6 pb-4">
@@ -15,7 +15,7 @@ export default function DiscoverTabContent({ title, path, CardComponent }: Disco
           View all
         </Link>
       </div>
-      {CardComponent}
+      {Slider}
     </>
   );
 }
