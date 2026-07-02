@@ -7,11 +7,24 @@ export function getMediaGenres(ids: number[], genres: MediaGenres[]) {
   return foundGenres;
 }
 
-export const titles = (media: Media) => (media.media_type === "tv" ? media.name : media.title);
-export const releaseDate = (media: Media) =>
-  media.media_type === "tv"
-    ? new Date(media.first_air_date).getFullYear()
-    : new Date(media.release_date).getFullYear();
+export const titles = (media: Media, media_type: "tv" | "movie") => {
+  if (media_type === "tv") {
+    return media.name;
+  } else if (media_type === "movie") {
+    return media.title;
+  } else {
+    throw new Error("titles: Error to get title of the media");
+  }
+};
+export const releaseDate = (media: Media, media_type: "tv" | "movie") => {
+  if (media_type === "tv") {
+    return new Date(media.first_air_date).getFullYear();
+  } else if (media_type === "movie") {
+    return new Date(media.release_date).getFullYear();
+  } else {
+    throw new Error("releaseDate: Error to get releaseDate of the media");
+  }
+};
 
 // TMDb's images
 export const baseUrl = process.env.NEXT_PUBLIC_IMAGES_BASE_URL;
