@@ -4,7 +4,7 @@ import UserAvatar from "../shared/ui/UserAvatar";
 
 export default function Header() {
   return (
-    <header className="flex justify-center px-6 h-18 border-b border-gray-500/20 ">
+    <header className="sticky top-0 z-10000 bg-background/80 flex justify-center px-6 h-18 border-b border-gray-500/20 ">
       <div className="flex h-full font-inter min-w-7xl">
         <div id="logo" className="self-center">
           <h2 className="font-title text-3xl text-amber-400">CINEHUB</h2>
