@@ -80,8 +80,8 @@ export async function getMediaById(id: string, mediaType: string) {
       return response.json();
     };
 
-    const movieData = await getMovie();
-    const creditsData = await getCredits();
+    const movieData = getMovie();
+    const creditsData = getCredits();
     const [movie, credits] = await Promise.all([movieData, creditsData]);
 
     return mapMovie(movie, credits);
