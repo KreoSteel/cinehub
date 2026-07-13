@@ -1,13 +1,14 @@
 "use client";
 import { TabsList, TabsTrigger, TabsContent, Tabs } from "@/app/shared/shadcn-ui/tabs";
 import DiscoverTabContent from "./DiscoverTabsContent";
-import { Media, TVshow } from "@/app/types";
 import MediaCard from "../Cards/MediaCard";
 import Slider from "react-slick";
+import WatchlistEmptyState from "../EmptyStates/WatchlistEmptyState";
+import { Media } from "@/app/types/media";
 
 interface DiscoverTabsProps {
   trendingWeek: Media[];
-  popularTVShows: TVshow[];
+  popularTVShows: Media[];
 }
 
 interface TabContentSliderProps {
@@ -15,12 +16,10 @@ interface TabContentSliderProps {
 }
 
 export default function DiscoverTabs({ trendingWeek, popularTVShows }: DiscoverTabsProps) {
-  console.log("Popular tv show: ", popularTVShows);
   return (
-    <Tabs defaultValue="trending-week">
+    <Tabs defaultValue="trending-week" className="py-6">
       <TabsList variant="line">
         <TabsTrigger value="trending-week">Trending this week</TabsTrigger>
-        <TabsTrigger value="top-10-week">Top 10 of the week</TabsTrigger>
         <TabsTrigger value="popular-tv-shows">Popular TV shows</TabsTrigger>
         <TabsTrigger value="watchlist">From your watchlist</TabsTrigger>
       </TabsList>
@@ -34,7 +33,7 @@ export default function DiscoverTabs({ trendingWeek, popularTVShows }: DiscoverT
           Slider={
             <TabContentSlider
               Card={trendingWeek.map((media) => (
-                <MediaCard key={media.id} media={media as Media} mediaType={media.media_type} />
+                <MediaCard key={media.id} media={media} mediaType={media.mediaType} />
               ))}
             />
           }
@@ -50,10 +49,20 @@ export default function DiscoverTabs({ trendingWeek, popularTVShows }: DiscoverT
           Slider={
             <TabContentSlider
               Card={popularTVShows.map((TVshow) => (
-                <MediaCard key={TVshow.id} media={TVshow as Media} mediaType="tv" />
+                <MediaCard key={TVshow.id} media={TVshow} mediaType="tv" />
               ))}
             />
           }
+        ></DiscoverTabContent>
+      </TabsContent>
+
+      {/*Watchlist tab content*/}
+
+      <TabsContent value="watchlist">
+        <DiscoverTabContent
+          title="From your watchlist"
+          path="/watchlist"
+          Slider={<WatchlistEmptyState />}
         ></DiscoverTabContent>
       </TabsContent>
     </Tabs>

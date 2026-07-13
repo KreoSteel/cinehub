@@ -1,8 +1,8 @@
 "use client";
-import { Media } from "@/app/types";
 import Slider from "react-slick";
 import { SliderNextArrow, SliderPreviousArrow } from "./SliderArrows";
 import HeroMediaCard from "../../elements/Cards/HeroMediaCard";
+import { Media } from "@/app/types/media";
 
 interface MediaSliderProps {
   medias: Media[];
@@ -22,7 +22,7 @@ export default function MediaSlider({ medias }: MediaSliderProps) {
   };
 
   return (
-    <Slider {...settings} className="group">
+    <Slider {...settings} className="group hero">
       {medias.map((media: Media) => {
         return <HeroMediaCard key={media.id} trendingMedia={media} />;
       })}
