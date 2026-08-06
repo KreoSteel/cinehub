@@ -1,6 +1,7 @@
-import { mapMedia, mapMovie } from "@/lib/media-helpers";
-import { TMDBMedia, TMDBResponse } from "@/app/types/tmdb";
+import { TMDBMedia, TMDBResponse, TMDBTVShow, TMDBTvShowAggregateCredits } from "@/app/types/tmdb";
 import { Genre, Media } from "@/app/types/media";
+import { mapMedia, mapMovie, mapTVshow } from "../lib/media-mappers";
+import { AggregateCrew, TVShow, TvShowAggregateCredits } from "@/app/types/tvshow";
 
 const originalFetch = global.fetch;
 
@@ -38,7 +39,7 @@ export async function getTrendingMedia(mediaType: "all" | "tv" | "movie", timeWi
 
   const parsed = sorted.map((media) => mapMedia(media, genresList));
 
-  const media = parsed.slice(0, limit || 20);
+  const media = parsed.slice(0, limit);
   return media;
 }
 
@@ -53,61 +54,72 @@ export async function getPopularTVshows() {
   const parsed: Media[] = data.results
     // Get rid of genre_ids and add genres property
     .map((TVshow: TMDBMedia) => mapMedia(TVshow, genresList))
+    // Sort by popularity in ascending order
+    .sort((a: Media, b: Media) => a.popularity - b.popularity)
     // Filter tv shows without the blacklisted id's
     .filter((item: Media) => !blacklist.has(item.id));
 
   return parsed;
 }
 
-export async function getMediaById(id: string, mediaType: string) {
-  if (!id) throw new Error("getMediaById: id argument is required");
-  if (!mediaType) throw new Error("getMediaById: mediaType argument is required");
-  const genresList = await fetchGenresList();
+export async function getMovieById(id: string) {
+  if (!id) throw new Error("getMovieById: id argument is required");
+  const getMovie = async () => {
+    const response = await fetch(`${API_URL}movie/${id}?${API_KEY}`);
+    if (!response.ok) {
+      throw new Error(`getMediaById(getMovie): HTTP error, status: ${response.status}, message: ${response.statusText}`);
+    }
+    return response.json();
+  };
 
-  if (mediaType === "movie") {
-    const getMovie = async () => {
-      const response = await fetch(`${API_URL}movie/${id}?${API_KEY}`);
-      if (!response.ok) {
-        throw new Error(`getMediaById(getMovie): HTTP error, status: ${response.status}, message: ${response.statusText}`);
-      }
-      return response.json();
-    };
-    const getCredits = async () => {
-      const response = await fetch(`${API_URL}movie/${id}/credits?${API_KEY}`);
-      if (!response.ok) {
-        throw new Error(`getMediaById(getCredits): HTTP error, status: ${response.status}, message: ${response.statusText}`);
-      }
-      return response.json();
-    };
+  const getCredits = async () => {
+    const response = await fetch(`${API_URL}movie/${id}/credits?${API_KEY}`);
+    if (!response.ok) {
+      throw new Error(`getMediaById(getCredits): HTTP error, status: ${response.status}, message: ${response.statusText}`);
+    }
+    return response.json();
+  };
 
-    const movieData = getMovie();
-    const creditsData = getCredits();
-    const [movie, credits] = await Promise.all([movieData, creditsData]);
+  const movieData = getMovie();
+  const creditsData = getCredits();
+  const [movie, credits] = await Promise.all([movieData, creditsData]);
 
-    return mapMovie(movie, credits);
-  } else if (mediaType === "tv") {
+  return mapMovie(movie, credits);
+}
+
+export async function getTVshowById(id: string) {
+  const getTVshow = async (): Promise<TMDBTVShow> => {
     const response = await fetch(`${API_URL}tv/${id}?${API_KEY}`);
     if (!response.ok) {
       throw new Error(`getMediaById(tv): HTTP error, status: ${response.status}, message: ${response.statusText}`);
     }
-
-    const data = await response.json();
-    return mapMedia(data, genresList);
+    const TVshow = await response.json();
+    return TVshow
   }
 
-  throw new Error(`getMediaById: Couldn't get media, try again`);
+  const getAggregateCredits = async (): Promise<TMDBTvShowAggregateCredits> => {
+    const response = await fetch(`${API_URL}tv/${id}/aggregate_credits?${API_KEY}`);
+    if (!response.ok) {
+      throw new Error(`getMediaById(getAggregateCredits): HTTP error, status: ${response.status}, message: ${response.statusText}`);
+    }
+    const credits = await response.json();
+    console.log(credits)
+    return credits
+  };
+
+  const [TVshow, credits] = await Promise.all([getTVshow(), getAggregateCredits()])
+  console.log("yoo", await getAggregateCredits())
+  return mapTVshow(TVshow, credits);
 }
 
 export async function fetchGenresList() {
-  // TODO: Promise.all
-  const tvResponse = await fetch(API_URL + "genre/tv/list?" + API_KEY);
-  const movieResponse = await fetch(API_URL + "genre/movie/list?" + API_KEY);
-  if (!tvResponse.ok || !movieResponse) {
-    throw new Error(`fetchGenresList: HTTP error, status: ${tvResponse.status}, message: ${tvResponse.statusText}`);
-  }
+  const [tvResponse, movieResponse] = await Promise.all([
+    fetch(API_URL + "genre/tv/list?" + API_KEY),
+    fetch(API_URL + "genre/movie/list?" + API_KEY),
+  ]);
+  console.log(`${API_URL}tv/$37854?${API_KEY}`);
 
-  const tvData = await tvResponse.json();
-  const movieData = await movieResponse.json();
+  const [tvData, movieData] = await Promise.all([tvResponse.json(), movieResponse.json()]);
 
   return {
     tvGenres: tvData.genres as Genre[],

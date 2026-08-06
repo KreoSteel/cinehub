@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { Play, Plus, Star } from "lucide-react";
 import Button from "../../shared/ui/Button";
-import { getImage } from "../../../lib/media-helpers";
+import { getImage } from "../../shared/lib/helpers";
 import { Media } from "@/app/types/media";
+import Link from "next/link";
 
 interface HeroMediaProps {
   trendingMedia: Media;
@@ -44,16 +45,14 @@ export default function HeroMediaCard({ trendingMedia }: HeroMediaProps) {
           <h1 className="font-title text-8xl">{trendingMedia.title}</h1>
           <p className="font-inter text-muted-foreground">{trendingMedia.overview}</p>
           <div className="flex gap-4 pt-5">
-            <Button
-              className="transition-all text-black bg-white hover:bg-amber"
-              Icon={<Plus/>}
-              text={"Watchlist"}
-            ></Button>
-            <Button
-              className="text-white bg-surface-2 border border-white/20 hover:bg-white/15"
-              Icon={<Play/>}
-              text={"View Details"}
-            ></Button>
+            <Button className="transition-all text-black bg-white hover:bg-amber" Icon={<Plus />} text={"Watchlist"}></Button>
+            <Link href={`${trendingMedia.mediaType}/${trendingMedia.id}`}>
+              <Button
+                className="text-white bg-surface-2 border border-white/20 hover:bg-white/15"
+                Icon={<Play />}
+                text={"View Details"}
+              ></Button>
+            </Link>
           </div>
         </div>
       </div>
