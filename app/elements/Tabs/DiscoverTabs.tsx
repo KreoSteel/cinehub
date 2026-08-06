@@ -59,11 +59,7 @@ export default function DiscoverTabs({ trendingWeek, popularTVShows }: DiscoverT
       {/*Watchlist tab content*/}
 
       <TabsContent value="watchlist">
-        <DiscoverTabContent
-          title="From your watchlist"
-          path="/watchlist"
-          Slider={<WatchlistEmptyState />}
-        ></DiscoverTabContent>
+        <DiscoverTabContent title="From your watchlist" path="/watchlist" Slider={<WatchlistEmptyState />}></DiscoverTabContent>
       </TabsContent>
     </Tabs>
   );
@@ -71,12 +67,12 @@ export default function DiscoverTabs({ trendingWeek, popularTVShows }: DiscoverT
 
 function TabContentSlider({ Card }: TabContentSliderProps) {
   const settings = {
-    arrows: false,
+    arrows: true,
     infinite: false,
     speed: 800,
     autoplay: false,
     slidesToShow: 6,
-    slidesToScroll: 3,
+    slidesToScroll: 5,
   };
 
   return <Slider {...settings}>{Card}</Slider>;
