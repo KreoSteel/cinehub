@@ -48,7 +48,6 @@ export type Cast = Omit<Crew, "department" | "job"> & {
 
 export type ProductionCompany = {
   id: number;
-  logoPath: string;
   name: string;
   originCountry: string;
 };

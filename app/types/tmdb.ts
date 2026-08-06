@@ -1,9 +1,5 @@
 import { Genre } from "./media";
 
-export type TVshow = Omit<TMDBMedia, "genre_ids" | "title" | "release_date"> & {
-  genres: Genre[];
-};
-
 // From TMDB API
 export type TMDBMedia = {
   adult: boolean;
@@ -33,7 +29,6 @@ export type TMDBResponse = {
   totalResults: number;
   page: number;
 };
-
 
 export type TMDBMovie = {
   adult: boolean;
@@ -73,7 +68,6 @@ export type TMDBCollection = {
 
 export type TMDBProductionCompany = {
   id: number;
-  logo_path: string;
   name: string;
   origin_country: string;
 };
@@ -92,7 +86,7 @@ export type TMDBSpokenLanguage = {
 export type TMDBCredits = {
   crew: TMDBCrew[];
   cast: TMDBCast[];
-}
+};
 
 export type TMDBCrew = {
   adult: boolean;
@@ -120,4 +114,126 @@ export type TMDBCast = {
   order: number;
   popularity: number;
   profile_path: string | null;
+};
+
+export type TMDBTVShow = {
+  adult: boolean;
+  backdrop_path: string;
+  created_by: TMDBCreatedBy[];
+  episode_run_time: number[];
+  first_air_date: string;
+  genres: Genre[];
+  homepage: string;
+  id: number;
+  in_production: boolean;
+  languages: string[];
+  last_air_date: string;
+  last_episode_to_air: TMDBEpisode | null;
+  name: string;
+  next_episode_to_air: TMDBEpisode | null;
+  networks: TMDBNetwork[];
+  number_of_episodes: number;
+  number_of_seasons: number;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  production_companies: TMDBProductionCompany[];
+  production_countries: TMDBProductionCountry[];
+  seasons: TMDBSeason[];
+  spoken_languages: TMDBSpokenLanguage[];
+  status: string;
+  tagline: string;
+  type: string;
+  vote_average: number;
+  vote_count: number;
+};
+
+export type TMDBCreatedBy = {
+  id: number;
+  credit_id: string;
+  name: string;
+  gender: number;
+  profile_path: string | null;
+};
+
+export type TMDBEpisode = {
+  id: number;
+  name: string;
+  overview: string;
+  vote_average: number;
+  vote_count: number;
+  air_date: string;
+  episode_number: number;
+  production_code: string;
+  runtime: number | null;
+  season_number: number;
+  show_id: number;
+  still_path: string | null;
+};
+
+export type TMDBNetwork = {
+  id: number;
+  name: string;
+  origin_country: string;
+};
+
+export type TMDBSeason = {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  season_number: number;
+  vote_average: number;
+};
+
+
+// Aggregate Credits
+export type TMDBTvShowAggregateCredits = {
+  cast: TMDBAggregateCast[];
+  crew: TMDBAggregateCrew[];
+};
+
+export type TMDBAggregateCast = {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  order: number;
+  roles: TMDBAggregateRole[];
+  total_episode_count: number;
+};
+
+export type TMDBAggregateRole = {
+  credit_id: string;
+  character: string;
+  episode_count: number;
+};
+
+export type TMDBAggregateCrew = {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  department: string;
+  jobs: TMDBAggregateJob[];
+  total_episode_count: number;
+};
+
+export type TMDBAggregateJob = {
+  credit_id: string;
+  job: string;
+  episode_count: number;
 };
