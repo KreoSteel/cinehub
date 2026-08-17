@@ -31,3 +31,7 @@ export const baseUrl = process.env.NEXT_PUBLIC_IMAGES_BASE_URL;
 export function getImage(path: string | null, size: string) {
   return path !== null ? baseUrl + size + path : null;
 }
+
+export function padNumberWithZero(num: number): string {
+  return num.toString().padStart(2, "0");
+}
