@@ -1,5 +1,5 @@
 import { Genre } from "./media";
-import { ProductionCompany, ProductionCountry, SpokenLanguages } from "./movie";
+import { Cast, Crew, ProductionCompany, ProductionCountry, SpokenLanguages } from "./movie";
 
 export type TVShow = {
   backdropPath: string;
@@ -71,6 +71,29 @@ export type Season = {
   posterPath: string | null;
   seasonNumber: number;
   rating: number;
+};
+
+export type SeasonDetails = {
+  id: number;
+  name: string;
+  overview: string;
+  airDate: string;
+  seasonNumber: number;
+  rating: number;
+  episodes: SeasonEpisode[];
+};
+
+export type SeasonEpisode = {
+  id: number;
+  name: string;
+  airDate: string;
+  episodeNumber: number;
+  runtime: number | null;
+  overview: string;
+  seasonNumber: number;
+  showID: number;
+  rating: number;
+  ratingCount: number;
 };
 
 

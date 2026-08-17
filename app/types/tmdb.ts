@@ -191,6 +191,35 @@ export type TMDBSeason = {
   vote_average: number;
 };
 
+export type TMDBSeasonDetails = {
+  air_date: string;
+  episodes: TMDBSeasonEpisode[];
+  name: string;
+  overview: string;
+  id: number;
+  poster_path: string | null;
+  season_number: number;
+  vote_average: number;
+};
+
+export type TMDBSeasonEpisode = {
+  air_date: string;
+  episode_number: number;
+  episode_type: string;
+  id: number;
+  name: string;
+  overview: string;
+  production_code: string;
+  runtime: number | null;
+  season_number: number;
+  show_id: number;
+  still_path: string | null;
+  vote_average: number;
+  vote_count: number;
+  crew: TMDBCrew[];
+  guest_stars: TMDBCast[];
+};
+
 
 // Aggregate Credits
 export type TMDBTvShowAggregateCredits = {
