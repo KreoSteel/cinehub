@@ -6,7 +6,7 @@ import Link from "next/link";
 
 interface MediaCardProps {
   media: Media;
-  mediaType: "tv" | "movie";
+  mediaType: string;
 }
 
 export default function MediaCard({ media, mediaType }: MediaCardProps) {
