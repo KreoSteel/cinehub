@@ -16,7 +16,6 @@ export default async function MediaDetailsPage({ params }: { params: Promise<Med
     return <MovieDetails movie={movie} />;
   } else {
     const tvshow = await getTVshowById(id);
-    console.log("TVshow:", tvshow)
     return <TVshowDetails tvshow={tvshow as TVShow} />;
   }
 }
