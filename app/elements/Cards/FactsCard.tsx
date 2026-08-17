@@ -18,10 +18,9 @@ export default function FactsCard({ facts, mediaType }: FactsCardProps) {
     const inProduction = tvFacts.inProduction === true ? "Yes" : "No"
     const spokenLanguages = tvFacts.spokenLanguages.map((item) => item.name).join(", ");
     const productionCountries = tvFacts.productionCountries.map((item) => item.name).join(", ");
-    console.log(tvFacts.episodeRunTime)
 
     return (
-      <div className="bg-background w-1/3 h-fit py-5 px-6 text-sm shrink-0 border border-border rounded-lg flex flex-col gap-5">
+      <div className="bg-surface w-1/3 h-fit py-5 px-6 text-sm shrink-0 border border-border rounded-lg flex flex-col gap-5">
         <div className="text-amber font-medium tracking-wide">
           <h1>FACTS</h1>
         </div>
@@ -65,7 +64,7 @@ export default function FactsCard({ facts, mediaType }: FactsCardProps) {
     const spokenLanguages = movieFacts.spokenLanguages.map((item) => item.name).join(", ");
     const productionCountries = movieFacts.productionCountries.map((item) => item.name).join(", ");
     return (
-      <div className="bg-background w-1/3 h-fit py-5 px-6 text-sm shrink-0 border border-border rounded-lg flex flex-col gap-5">
+      <div className="bg-surface w-1/3 h-fit py-5 px-6 text-sm shrink-0 border border-border rounded-lg flex flex-col gap-5">
         <div className="text-amber font-medium tracking-wide">
           <h1>FACTS</h1>
         </div>

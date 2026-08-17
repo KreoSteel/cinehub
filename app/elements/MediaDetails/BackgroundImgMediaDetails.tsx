@@ -11,9 +11,12 @@ export function BackgroundImgMediaDetails({ backdropPath, title }: BackgroundImg
   if (bgImageURL === null) return null;
 
   return (
-    <div className="w-full min-h-screen relative">
-      <Image src={bgImageURL} width={9999} height={0} alt={title} className="-z-100"></Image>
-      <div className="absolute inset-0 w-full h-full bg-linear-to-t from-black via-black via-40% to-black/60 to-80%"></div>
+    <div className="fixed inset-0 -z-10">
+      <Image src={bgImageURL} fill alt={title} className="object-cover"></Image>
+      <div className="absolute inset-0 bg-linear-to-t from-background from-0% via-background/60 via-60% to-background/0 to-100% in-oklch" />
     </div>
+
   );
 }
+
+// from-[#0A0A0A] from-45% to-[#0A0A0A]/60 to-80%

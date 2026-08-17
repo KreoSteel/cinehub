@@ -13,7 +13,6 @@ export function PosterImage({ posterPath, title }: PosterImgProp) {
   const posterImage = getImage(posterPath, "original");
 
   const router = useRouter();
-  if (!posterImage) throw new Error("movieDetailHero: posterImage is required");
 
   return (
     // Also add back to previous page button
@@ -21,7 +20,7 @@ export function PosterImage({ posterPath, title }: PosterImgProp) {
       <button onClick={() => router.back()} className="flex items-center w-fit hover:text-gray-300 gap-1 text-foreground/60">
         <ArrowLeft strokeWidth={1.5} size={20} /> Back
       </button>
-      <Image src={posterImage} width={270} height={300} alt={title} className="rounded-2xl border border-muted-foreground/30"></Image>
+      {posterImage ? <Image src={posterImage} width={270} height={300} alt={title} className="rounded-lg border border-muted-foreground/30"></Image> : null}
     </div>
   );
 }

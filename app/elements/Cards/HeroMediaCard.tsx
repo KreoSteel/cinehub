@@ -32,7 +32,7 @@ export default function HeroMediaCard({ trendingMedia }: HeroMediaProps) {
         />
         <div className="absolute inset-be-10 left-10 z-100 font-inter">
           <div className="flex gap-2 pb-3">
-            <div className="py-1 px-2 w-fit rounded-md font-bold text-xs bg-amber text-black">TRENDING</div>
+            <div className="py-1 px-2 w-fit rounded-lg font-bold text-xs bg-amber text-black">TRENDING</div>
             <p className="text-muted-foreground pl-2">{trendingMedia.releaseDate}</p>
             <span className="flex items-center gap-1.5">
               <Star size={16} fill="#fab72a" stroke="#fab72a" />

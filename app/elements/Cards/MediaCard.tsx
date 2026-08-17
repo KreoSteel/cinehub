@@ -6,34 +6,35 @@ import Link from "next/link";
 
 interface MediaCardProps {
   media: Media;
-  mediaType: string;
+  mediaType: "tv" | "movie";
 }
 
 export default function MediaCard({ media, mediaType }: MediaCardProps) {
   const firstGenre = media.genres !== null ? media.genres.find((genre) => genre) : "";
-  console.log(media.releaseDate);
 
   return (
     <div className="px-2 relative group cursor-pointer w-full h-full">
-      <span className="absolute right-4 top-2 bg-black/60 rounded-full z-1000 px-2 py-1 text-xs font-bold text-amber flex items-center gap-1">
-        <Star size={12} fill="#fab72a" stroke="#fab72a" />
-        <p>{media.rating ? media.rating.toFixed(1) : 0.0}</p>
-      </span>
-      <div className="relative w-full aspect-2/3 overflow-hidden rounded-xl">
+      {media.rating ?
+        <span className="absolute right-4 top-2 bg-black/60 rounded-lg z-1000 px-2 py-1 text-xs font-bold text-amber flex items-center gap-1">
+          <Star size={12} fill="#fab72a" stroke="#fab72a" />
+          <p>{media.rating.toFixed(1)}</p>
+        </span> : null}
+      <div className="relative w-full aspect-2/3 overflow-hidden rounded-lg">
         <Link href={`/${mediaType}/${media.id}`}>
           <Image
-            src={getImage(media.posterPath, "w500") || "undefined"}
+            src={getImage(media.posterPath, "w500") || ""}
             alt=""
             width={200}
             height={200}
-            className="rounded-xl transition-all duration-400 group-hover:scale-105 object-cover"
+            className="rounded-lg transition-all duration-400 group-hover:scale-105 object-cover"
           ></Image>
         </Link>
       </div>
       <div className="pt-2">
-        <h2 className="text-base font-semibold">{media.title}</h2>
+        <h2 className="text-base font-s It w.map((item) => item.vote_average >= 6.5 && item)
+        .filter((item) => item !== false);orks, but server actions are the wrong tool for querying:emibold">{media.title}</h2>
         <div className="text-muted-foreground flex">
-          <p>{media.releaseDate}</p>
+          {media.releaseDate ? <p>{media.releaseDate}</p> : null}
           {firstGenre && (
             <>
               <p className="px-1">•</p>

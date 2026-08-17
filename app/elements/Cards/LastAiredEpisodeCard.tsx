@@ -10,7 +10,7 @@ export default function LastAiredEpisodeCard({ tvshow }: LastAiredEpisodeCardPro
   const lastEpToAir = tvshow.lastEpisodeToAir;
   if (lastEpToAir === null) return;
   return (
-    <div className="bg-surface w-fit max-w-xl border border-border rounded-2xl px-6 py-5 mt-4">
+    <div className="bg-surface w-fit max-w-xl border border-border rounded-lg px-6 py-5 mt-4">
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
           <Calendar size={14} />
@@ -20,8 +20,9 @@ export default function LastAiredEpisodeCard({ tvshow }: LastAiredEpisodeCardPro
         <div className="flex gap-4 text-muted-foreground text-sm">
           <p>{format(lastEpToAir.airDate, "MMM d, yyyy")}</p>
           <div className="flex gap-1.5 items-center">
-            <Clock size={16} />
-            <p>{`${lastEpToAir.runtime}m`}</p>
+            {lastEpToAir.runtime !== null ? (<>
+              <Clock size={16} />
+              <p>{`${lastEpToAir.runtime}m`}</p></>) : null}
           </div>
         </div>
         <p className="text-sm leading-relaxed text-white/80 max-w-160">{lastEpToAir.overview}</p>

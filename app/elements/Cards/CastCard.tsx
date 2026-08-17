@@ -14,7 +14,6 @@ export default function CastCard({ cast }: CastCardProps) {
   if ("totalEpisodeCount" in cast) {
     const role = cast.roles.find(item => item);
     if (role === undefined) return;
-    console.log(cast.roles)
     return (
       <div className="flex gap-2 items-center">
         <Image src={castImg} width={50} height={0} alt={cast.name} className="rounded-lg object-contain"></Image>
