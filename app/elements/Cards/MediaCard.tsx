@@ -6,14 +6,14 @@ import Link from "next/link";
 
 interface MediaCardProps {
   media: Media;
-  mediaType: string;
+  mediaType: string;  
 }
 
 export default function MediaCard({ media, mediaType }: MediaCardProps) {
   const firstGenre = media.genres !== null ? media.genres.find((genre) => genre) : "";
 
   return (
-    <div className="px-2 relative group cursor-pointer w-full h-full">
+    <div className="mediacard opacity-0 translate-y-30 px-2 relative group cursor-pointer w-full h-full">
       {media.rating ?
         <span className="absolute right-4 top-2 bg-black/60 rounded-lg z-1000 px-2 py-1 text-xs font-bold text-amber flex items-center gap-1">
           <Star size={12} fill="#fab72a" stroke="#fab72a" />

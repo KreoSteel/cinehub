@@ -5,6 +5,10 @@ import MediaCard from "../Cards/MediaCard";
 import Slider from "react-slick";
 import WatchlistEmptyState from "../EmptyStates/WatchlistEmptyState";
 import { Media } from "@/app/types/media";
+import { useRef } from "react";
+import { useGSAP, gsap } from "@/app/shared/lib/gsap";
+
+
 
 interface DiscoverTabsProps {
   trendingWeek: Media[];
@@ -66,6 +70,12 @@ export default function DiscoverTabs({ trendingWeek, popularTVShows }: DiscoverT
 }
 
 function TabContentSlider({ Card }: TabContentSliderProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useGSAP(() => {
+    gsap.effects.slide(".mediacard")
+  }, { scope: containerRef });
+
   const settings = {
     arrows: true,
     infinite: false,
@@ -75,5 +85,10 @@ function TabContentSlider({ Card }: TabContentSliderProps) {
     slidesToScroll: 5,
   };
 
-  return <Slider {...settings}>{Card}</Slider>;
+
+  return (
+    <div ref={containerRef} className="tab-content-slider">
+      <Slider {...settings}>{Card}</Slider>
+    </div>
+  );
 }
