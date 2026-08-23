@@ -3,7 +3,7 @@ import { GenreLists, Media } from "@/app/types/media";
 import { Movie, SpokenLanguages } from "@/app/types/movie";
 import { TMDBMedia, TMDBMovie, TMDBCredits, TMDBTVShow, TMDBTvShowAggregateCredits } from "@/app/types/tmdb";
 import { TVShow } from "@/app/types/tvshow";
-import { mapOrganizations, mapProdCountries, mapCreatedBy, mapEpisode, mapAggregateCredits, mapSeason, mapMovieCast, mapMovieCrew, mapTVshowCrew, mapTVshowCast } from "./map-helpers";
+import { mapOrganizations, mapProdCountries, mapCreatedBy, mapEpisode, mapSeason, mapMovieCast, mapMovieCrew, mapTVshowCast } from "./map-helpers";
 
 // Map media/movie/tvshow
 export function mapMedia(media: TMDBMedia, genreLists: GenreLists): Media {
@@ -21,8 +21,8 @@ export function mapMedia(media: TMDBMedia, genreLists: GenreLists): Media {
   };
 }
 
-export function mapMovie(movie: TMDBMovie, credits: TMDBCredits): Movie {
-  return {
+export function mapMovie(movie: TMDBMovie, credits: TMDBCredits): Movie | null {
+  return movie ? {
     id: movie.id,
     title: movie.title,
     backdropPath: movie.backdrop_path,
@@ -44,13 +44,13 @@ export function mapMovie(movie: TMDBMovie, credits: TMDBCredits): Movie {
     credits: { cast: mapMovieCast(credits.cast), crew: mapMovieCrew(credits.crew) },
     productionCompanies: mapOrganizations(movie.production_companies),
     productionCountries: mapProdCountries(movie.production_countries),
-  };
+  } : null;
 }
 
-export function mapTVshow(tvShow: TMDBTVShow, credits: TMDBTvShowAggregateCredits): TVShow {
-  const castSliced = credits.cast.slice(0, 100)
+export function mapTVshow(tvShow: TMDBTVShow, credits: TMDBTvShowAggregateCredits): TVShow | null {
+  const castSliced = credits?.cast.slice(0, 100)
 
-  return {
+  return tvShow ? {
     id: tvShow.id,
     backdropPath: tvShow.backdrop_path,
     createdBy: mapCreatedBy(tvShow.created_by),
@@ -82,5 +82,5 @@ export function mapTVshow(tvShow: TMDBTVShow, credits: TMDBTvShowAggregateCredit
     type: tvShow.type,
     rating: tvShow.vote_average,
     ratingCount: tvShow.vote_count,
-  };
+  } : null;
 }

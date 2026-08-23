@@ -1,5 +1,5 @@
 import { Genre } from "./media";
-import { Cast, Crew, ProductionCompany, ProductionCountry, SpokenLanguages } from "./movie";
+import { ProductionCompany, ProductionCountry, SpokenLanguages } from "./movie";
 
 export type TVShow = {
   backdropPath: string;

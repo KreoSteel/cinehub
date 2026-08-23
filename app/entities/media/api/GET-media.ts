@@ -1,7 +1,6 @@
-import { TMDBMedia, TMDBResponse, TMDBTVShow, TMDBTvShowAggregateCredits } from "@/app/types/tmdb";
+import { TMDBMedia, TMDBResponse } from "@/app/types/tmdb";
 import { Genre, Media } from "@/app/types/media";
 import { mapMedia, mapMovie, mapTVshow } from "../lib/media-mappers";
-import { SeasonDetails } from "@/app/types/tvshow";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_KEY = `api_key=${process.env.API_KEY}`;
@@ -53,6 +52,11 @@ export async function getMovieById(id: string) {
   if (!id) throw new Error("getMovieById: id argument is required");
   const getMovie = async () => {
     const response = await fetch(`${API_URL}movie/${id}?${API_KEY}`, { next: { revalidate: 1800 }, cache: "force-cache" });
+
+    if (response.status === 404) {
+      return null
+    }
+
     if (!response.ok) {
       throw new Error(`getMediaById(getMovie): HTTP error, status: ${response.status}, message: ${response.statusText}`);
     }
@@ -61,6 +65,11 @@ export async function getMovieById(id: string) {
 
   const getCredits = async () => {
     const response = await fetch(`${API_URL}movie/${id}/credits?${API_KEY}`, { next: { revalidate: 1800 }, cache: "force-cache" });
+
+    if (response.status === 404) {
+      return null
+    }
+
     if (!response.ok) {
       throw new Error(`getMediaById(getCredits): HTTP error, status: ${response.status}, message: ${response.statusText}`);
     }
@@ -75,8 +84,13 @@ export async function getMovieById(id: string) {
 }
 
 export async function getTVshowById(id: string) {
-  const getTVshow = async (): Promise<TMDBTVShow> => {
+  const getTVshow = async () => {
     const response = await fetch(`${API_URL}tv/${id}?${API_KEY}`, { next: { revalidate: 1800 }, cache: "force-cache" });
+
+    if (response.status === 404) {
+      return null
+    }
+
     if (!response.ok) {
       throw new Error(`getMediaById(tv): HTTP error, status: ${response.status}, message: ${response.statusText}`);
     }
@@ -84,8 +98,13 @@ export async function getTVshowById(id: string) {
     return TVshow
   }
 
-  const getAggregateCredits = async (): Promise<TMDBTvShowAggregateCredits> => {
+  const getAggregateCredits = async () => {
     const response = await fetch(`${API_URL}tv/${id}/aggregate_credits?${API_KEY}`, { next: { revalidate: 1800 }, cache: "force-cache" });
+
+    if (response.status === 404) {
+      return null
+    }
+
     if (!response.ok) {
       throw new Error(`getMediaById(getAggregateCredits): HTTP error, status: ${response.status}, message: ${response.statusText}`);
     }
