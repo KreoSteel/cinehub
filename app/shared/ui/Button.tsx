@@ -11,9 +11,9 @@ export default function Button({ className, text, Icon, onClick }: ButtonProps) 
       onClick={onClick}
       className={`font-bold font-inter rounded-lg px-7 h-11 cursor-pointer ${className}`}
     >
-      <div className="flex gap-2">
+      <div className="flex items-center gap-1.5">
         {Icon}
-        {text}
+        <p>{text}</p>
       </div>
     </button>
   );

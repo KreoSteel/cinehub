@@ -26,7 +26,7 @@ export default function HeroMediaCard({ trendingMedia }: HeroMediaProps) {
           src={getImage(trendingMedia.backdropPath, "original") || ""}
           width={1920}
           height={1080}
-          alt=""
+          alt={trendingMedia.title}
           loading="eager"
           className="-z-100"
         />
@@ -45,14 +45,18 @@ export default function HeroMediaCard({ trendingMedia }: HeroMediaProps) {
           <h1 className="font-title text-8xl">{trendingMedia.title}</h1>
           <p className="font-inter text-muted-foreground">{trendingMedia.overview}</p>
           <div className="flex gap-4 pt-5">
-            <Button className="transition-all text-black bg-white hover:bg-amber" Icon={<Plus />} text={"Watchlist"}></Button>
             <Link href={`${trendingMedia.mediaType}/${trendingMedia.id}`}>
               <Button
-                className="text-white bg-surface-2 border border-white/20 hover:bg-white/15"
+                className="transition-all duration-250 text-black/90 bg-white hover:bg-amber"
                 Icon={<Play />}
                 text={"View Details"}
               ></Button>
             </Link>
+            <Button
+              className="text-white transition-all duration-250 bg-surface-2 border border-white/10 hover:bg-white/15"
+              Icon={<Plus />}
+              text={"Add to Watchlist"}
+            ></Button>
           </div>
         </div>
       </div>
