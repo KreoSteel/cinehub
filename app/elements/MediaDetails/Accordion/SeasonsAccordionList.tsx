@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSeasonDetailsOptions } from "@/app/entities/media/queryOptions/getSeasonDetailsOptions";
 import { useState } from "react";
 import { padNumberWithZero } from "@/app/shared/lib/helpers";
-import EpisodeAccordionContentSkeleton from "../../EmptyStates/EpisodeAccordionContentSkeleton";
+import EpisodeAccordionContentSkeleton from "../../Skeletons/EpisodeAccordionContentSkeleton";
 import EpisodeAccordionContent from "./EpisodeAccordionContent";
 
 interface SeasonsAccordionListProps {
