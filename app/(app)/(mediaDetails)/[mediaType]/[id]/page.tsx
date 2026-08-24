@@ -10,7 +10,6 @@ interface MediaDetailsPageProps {
 }
 
 export default async function MediaDetailsPage({ params }: { params: Promise<MediaDetailsPageProps> }) {
-  await new Promise((r) => setTimeout(r, 2000))
   const { mediaType, id } = await params;
 
   if (mediaType === "movie") {
