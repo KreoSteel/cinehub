@@ -1,7 +1,7 @@
 import { padNumberWithZero } from "@/app/shared/lib/helpers";
-import { SeasonEpisode } from "@/app/types/tvshow";
 import { Clock } from "lucide-react";
 import { format } from "date-fns";
+import { SeasonEpisode } from "@/app/types/tvshow";
 
 interface EpisodeAccordionContentProp {
   episode: SeasonEpisode;

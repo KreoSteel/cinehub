@@ -27,7 +27,7 @@ export default function MoreLikeThisMedia({ media, mediaType }: MoreLikeThisMedi
   };
 
   return (
-    <div ref={containerRef} className="w-full max-w-7xl mx-auto pt-20 flex flex-col gap-6 pb-40">
+    <div ref={containerRef} className="w-full max-w-7xl mx-auto flex flex-col gap-6 pb-40">
       <h1 className="font-bold text-5xl tracking-wide font-title text-shadow-lg pl-2">More Like This</h1>
       <Slider {...settings}>
         {media.map(item => (

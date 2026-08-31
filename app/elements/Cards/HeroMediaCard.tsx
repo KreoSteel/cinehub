@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Play, Plus, Star } from "lucide-react";
+import { Eye, Play, Plus, Star } from "lucide-react";
 import Button from "../../shared/ui/Button";
 import { getImage } from "../../shared/lib/helpers";
-import { Media } from "@/app/types/media";
 import Link from "next/link";
+import { Media } from "@/app/types/media";
 
 interface HeroMediaProps {
   trendingMedia: Media;
@@ -21,14 +21,12 @@ export default function HeroMediaCard({ trendingMedia }: HeroMediaProps) {
     <div className="relative">
       <div className="rounded-lg">
         <div className="absolute inset-0 bg-linear-to-t from-black/80 to-black/10 pointer-events-none z-10"></div>
-
         <Image
           src={getImage(trendingMedia.backdropPath, "original") || ""}
           width={1920}
           height={1080}
           alt={trendingMedia.title}
           loading="eager"
-          className="-z-100"
         />
         <div className="absolute inset-be-10 left-10 z-100 font-inter">
           <div className="flex gap-2 pb-3">
@@ -47,13 +45,13 @@ export default function HeroMediaCard({ trendingMedia }: HeroMediaProps) {
           <div className="flex gap-4 pt-5">
             <Link href={`${trendingMedia.mediaType}/${trendingMedia.id}`}>
               <Button
-                className="transition-all duration-250 text-black/90 bg-white hover:bg-amber"
-                Icon={<Play />}
+                className="transition-all duration-250 text-black/90 bg-white shadow-white/30 shadow-md hover:shadow-amber/30 hover:shadow-lg hover:bg-amber"
+                Icon={<Eye />}
                 text={"View Details"}
               ></Button>
             </Link>
             <Button
-              className="text-white transition-all duration-250 bg-surface-2 border border-white/10 hover:bg-white/15"
+              className="text-white transition-all duration-250 shadow-surface-2 shadow-md hover:shadow-surface-2 hover:shadow-lg bg-surface-2 border border-white/10 hover:bg-white/15"
               Icon={<Plus />}
               text={"Add to Watchlist"}
             ></Button>

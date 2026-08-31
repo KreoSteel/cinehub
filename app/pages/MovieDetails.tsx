@@ -8,10 +8,11 @@ import { BackgroundImgMediaDetails } from "../elements/MediaDetails/BackgroundIm
 import MediaDetailsActions from "../elements/MediaDetails/MediaDetailsActions";
 import Directors from "../elements/MediaDetails/Directors";
 import Cast from "../elements/MediaDetails/Cast";
-import { Genre } from "../types/media";
+import { Genre } from "@/app/types/media";
 import MoreLikeThisMedia from "../elements/MediaDetails/MoreLikeThisMedia";
 import { useQuery } from "@tanstack/react-query";
 import { getSimilarMediaOptions } from "../entities/media/queryOptions/getSimilarMediaOptions";
+import MoreLikeThisSkeleton from "../elements/EmptyStates/MoreLikeThisSkeleton";
 
 interface MovieDetailsProps {
   movie: Movie;
@@ -28,7 +29,7 @@ export default function MovieDetails({ movie }: MovieDetailsProps) {
   return (
     <div className="relative">
       <BackgroundImgMediaDetails title={movie.title} backdropPath={movie.backdropPath} />
-      <div className="flex mx-auto pt-40 md:pt-65 w-full max-w-7xl">
+      <div className="flex mx-auto pt-40 pb-18 md:pt-65 w-full max-w-7xl">
         <PosterImage title={movie.title} posterPath={movie.posterPath} />
         <div className="px-10 py-6 flex flex-col gap-4 font-inter">
           <p className="text-muted-foreground tracking-widest text-sm text-shadow-sm">{movie.status.toUpperCase()}</p>
@@ -58,7 +59,7 @@ export default function MovieDetails({ movie }: MovieDetailsProps) {
               <Directors directors={directors} />
               <Cast cast={casts} />
               <div className="flex flex-col gap-2.5">
-                <h2 className="uppercase text-muted-foreground/70 tracking-widest text-xs">Production</h2>
+                <h2 className="uppercase text-muted-foreground/70 tracking-widest text-shadow-md text-xs">Production</h2>
                 <div className="flex flex-wrap gap-3">
                   {movie.productionCompanies.map((production) => (
                     <ProductionCard production={production} key={production.id}></ProductionCard>
@@ -70,7 +71,7 @@ export default function MovieDetails({ movie }: MovieDetailsProps) {
           </div>
         </div>
       </div>
-      {isPending ? <p>Loading...</p> :
+      {isPending ? <MoreLikeThisSkeleton /> :
         <MoreLikeThisMedia mediaType="movie" media={similarData!} />
       }
     </div>

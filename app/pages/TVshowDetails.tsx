@@ -8,11 +8,12 @@ import LastAiredEpisodeCard from "../elements/Cards/LastAiredEpisodeCard";
 import Cast from "../elements/MediaDetails/Cast";
 import FactsCard from "../elements/Cards/FactsCard";
 import CreatedBy from "../elements/MediaDetails/CreatedBy";
-import { Genre } from "../types/media";
+import { Genre } from "@/app/types/media";
 import SeasonsAccordionList from "../elements/MediaDetails/Accordion/SeasonsAccordionList";
 import MoreLikeThisMedia from "../elements/MediaDetails/MoreLikeThisMedia";
 import { useQuery } from "@tanstack/react-query";
 import { getSimilarMediaOptions } from "../entities/media/queryOptions/getSimilarMediaOptions";
+import MoreLikeThisSkeleton from "../elements/EmptyStates/MoreLikeThisSkeleton";
 
 interface TVShowDetailsProps {
   tvshow: TVShow;
@@ -61,7 +62,7 @@ export default function TVShowDetails({ tvshow }: TVShowDetailsProps) {
           </div>
         </div>
       </div>
-      {isPending ? <p>Loading...</p> :
+      {isPending ? <MoreLikeThisSkeleton /> :
         <MoreLikeThisMedia mediaType="tv" media={similarData!} />
       }
     </div>

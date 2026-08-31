@@ -1,13 +1,13 @@
 'use client'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/shared/shadcn-ui/accordion";
 import { format } from "date-fns";
-import { Season } from "@/app/types/tvshow";
 import { useQuery } from "@tanstack/react-query";
 import { getSeasonDetailsOptions } from "@/app/entities/media/queryOptions/getSeasonDetailsOptions";
 import { useState } from "react";
 import { padNumberWithZero } from "@/app/shared/lib/helpers";
 import EpisodeAccordionContentSkeleton from "../../Skeletons/EpisodeAccordionContentSkeleton";
 import EpisodeAccordionContent from "./EpisodeAccordionContent";
+import { Season } from "@/app/types/tvshow";
 
 interface SeasonsAccordionListProps {
   seasons: Season[];
@@ -23,8 +23,8 @@ export default function SeasonsAccordion({ seasons, tvShowID, seasonsCount, tota
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between  text-muted-foreground/70 tracking-wider text-xs">
-        <h2 className="uppercase">SEASONS</h2>
-        <p>{seasonsCount} seasons · {totalEpisodesCount} episodes</p>
+        <h2 className="uppercase text-shadow-md">SEASONS</h2>
+        <p className="text-shadow-md">{seasonsCount} seasons · {totalEpisodesCount} episodes</p>
       </div>
       <Accordion onValueChange={(value: number[]) => {
         setSeasonNumber(value[0] ?? null);
@@ -38,7 +38,7 @@ export default function SeasonsAccordion({ seasons, tvShowID, seasonsCount, tota
           return (
             <AccordionItem className="border-b border-border last:border-b-0" key={id} value={season.seasonNumber}>
               <AccordionTrigger className={`bg-surface flex gap-4 items-center hover:no-underline px-5 pl-10 hover:bg-surface ${hoverRadius}`}>
-                <h1 className="text-2xl font-bald font-title text-amber">{padNumberWithZero(season.seasonNumber)}</h1>
+                <h1 className="text-2xl font-semibold font-title text-amber">{padNumberWithZero(season.seasonNumber)}</h1>
                 <div className="flex flex-col gap-1">
                   <h2>{name}</h2>
                   <div className="flex gap-2 text-muted-foreground text-xs">

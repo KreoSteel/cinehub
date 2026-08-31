@@ -18,5 +18,3 @@ export function BackgroundImgMediaDetails({ backdropPath, title }: BackgroundImg
 
   );
 }
-
-// from-[#0A0A0A] from-45% to-[#0A0A0A]/60 to-80%

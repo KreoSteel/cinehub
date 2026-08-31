@@ -1,7 +1,7 @@
-import { Cast } from "@/app/types/movie";
 import { getImage } from "@/app/shared/lib/helpers";
-import Image from "next/image";
+import { Cast } from "@/app/types/movie";
 import { AggregateCast } from "@/app/types/tvshow";
+import Image from "next/image";
 
 interface CastCardProps {
   cast: Cast | AggregateCast;
@@ -18,8 +18,8 @@ export default function CastCard({ cast }: CastCardProps) {
       <div className="flex gap-2 items-center">
         <Image src={castImg} width={50} height={0} alt={cast.name} className="rounded-lg object-contain"></Image>
         <div className="w-40">
-          <h2 className="text-sm font-medium">{cast.name}</h2>
-          <p className="text-xs text-muted-foreground">{role.character}</p>
+          <h2 className="text-sm font-medium text-shadow-sm">{cast.name}</h2>
+          <p className="text-xs text-muted-foreground text-shadow-sm">{role.character}</p>
         </div>
       </div>
     )
@@ -28,8 +28,8 @@ export default function CastCard({ cast }: CastCardProps) {
       <div className="flex gap-2 items-center">
         <Image src={castImg} width={50} height={0} alt={cast.name} className="rounded-lg object-contain"></Image>
         <div className="w-40">
-          <h2 className="text-sm font-medium">{cast.name}</h2>
-          <p className="text-xs text-muted-foreground">{cast.character}</p>
+          <h2 className="text-sm font-medium text-shadow-sm">{cast.name}</h2>
+          <p className="text-xs text-muted-foreground text-shadow-sm">{cast.character}</p>
         </div>
       </div>
     );

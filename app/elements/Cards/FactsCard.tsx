@@ -1,8 +1,8 @@
 "use client";
-import { Movie } from "@/app/types/movie";
 import { displayNames, formatCurrency } from "@/app/shared/lib/helpers";
-import { format } from "date-fns";
+import { Movie } from "@/app/types/movie";
 import { TVShow } from "@/app/types/tvshow";
+import { format } from "date-fns";
 
 interface FactsCardProps {
   facts: Movie | TVShow;

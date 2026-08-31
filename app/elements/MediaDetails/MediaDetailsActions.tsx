@@ -9,9 +9,9 @@ interface MediaDetailsActionsProps {
 export default function MediaDetailsActions({ homepage }: MediaDetailsActionsProps) {
   return (
     <div className="flex items-center gap-4">
-      <Button className="transition-all text-black bg-white hover:bg-amber text-sm" text={"Mark as watched"}></Button>
-      <Button className="text-white bg-surface-2 border border-white/20 hover:bg-white/15 text-sm" Icon={<Plus size={18} />} text={"Add to Watchlist"}></Button>
-      <Link href={homepage}>
+      <Button className="transition-all duration-350 text-black bg-white shadow-white/30 shadow-md hover:shadow-amber/30 hover:shadow-lg hover:bg-amber text-sm" text={"Mark as watched"}></Button>
+      <Button className="text-white bg-surface-2 shadow-surface-2 shadow-md hover:shadow-surface-2 hover:shadow-lg border border-white/20 hover:bg-white/15 text-sm" Icon={<Plus size={18} />} text={"Add to Watchlist"}></Button>
+      <Link href={homepage || "#"}>
         <Button
           className="text-white/70 border border-white/10 hover:bg-white/10 hover:text-white text-sm"
           Icon={<Globe size={18} />}

@@ -13,7 +13,7 @@ export function PosterImage({ posterPath, title }: PosterImgProp) {
   const posterImage = getImage(posterPath, "original");
 
   const router = useRouter();
-  
+
   return (
     // Also add back to previous page button
     <div className="flex flex-col gap-5">
