@@ -1,7 +1,7 @@
 export type Media = {
   id: number;
-  backdropPath: string;
-  posterPath: string;
+  backdropPath: string | null;
+  posterPath: string | null;
   title: string;
   overview: string;
   mediaType: string;

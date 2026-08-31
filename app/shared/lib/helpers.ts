@@ -1,4 +1,5 @@
 import { Genre } from "@/app/types/media";
+import { publicEnv } from "../constants/env.public";
 
 export const formatCurrency = (value: number) => {
   return new Intl.NumberFormat("en-US", {
@@ -26,10 +27,10 @@ export function getGenres(ids: number[] | number, genres: Genre[]): Genre[] | []
 }
 
 // TMDb's images
-export const baseUrl = process.env.NEXT_PUBLIC_IMAGES_BASE_URL;
+export const baseUrl = publicEnv.NEXT_PUBLIC_IMAGES_BASE_URL;
 
 export function getImage(path: string | null, size: string) {
-  return path !== null ? baseUrl + size + path : null;
+  return path !== null ? baseUrl + size + path : "/defaultMediaCard.jpg";
 }
 
 export function padNumberWithZero(num: number): string {

@@ -1,8 +1,9 @@
 import MovieDetails from "@/app/pages/MovieDetails";
 import TVshowDetails from "@/app/pages/TVshowDetails";
 import { getMovieById, getTVshowById } from "@/app/entities/media/api/GET-media";
-import { TVShow } from "@/app/types/tvshow";
+import { mediaTypeSchema } from "@/app/shared/lib/schemas/media";
 import { notFound } from "next/navigation";
+import { TVShow } from "@/app/types/tvshow";
 
 interface MediaDetailsPageProps {
   mediaType: string;
@@ -11,8 +12,11 @@ interface MediaDetailsPageProps {
 
 export default async function MediaDetailsPage({ params }: { params: Promise<MediaDetailsPageProps> }) {
   const { mediaType, id } = await params;
+  const parsedMediaType = mediaTypeSchema.safeParse(mediaType);
 
-  if (mediaType === "movie") {
+  if (!parsedMediaType.success) return notFound()
+
+  if (parsedMediaType.data === "movie") {
     const movie = await getMovieById(id);
 
     if (!movie) return notFound()

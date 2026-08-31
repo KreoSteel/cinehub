@@ -1,51 +1,59 @@
-import { TMDBMedia, TMDBResponse } from "@/app/types/tmdb";
-import { Genre, Media } from "@/app/types/media";
+import { cache } from "react";
+import { Media } from "@/app/types/media";
 import { mapMedia, mapMovie, mapTVshow } from "../lib/media-mappers";
+import { tmdbGenreListSchema, tmdbResponseSchema } from "./tmdb.schemas";
+import { API_URL, API_KEY } from "@/app/shared/constants/api";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const API_KEY = `api_key=${process.env.API_KEY}`;
 
 export async function getPopularMovies(page: number) {
   const response = await fetch(API_URL + "movie/popular?" + API_KEY + `&page=${page}`, { next: { revalidate: 1800 }, cache: "force-cache" });
   if (!response.ok) {
     throw new Error(`getPopularMovies: HTTP error, status: ${response.status}, message: ${response.statusText}`);
   }
-  const parsed: TMDBResponse = await response.json();
-  const movies: TMDBMedia[] = parsed.results;
-  return movies;
-}
-
-export async function getTrendingMedia(mediaType: "all" | "tv" | "movie", timeWindow: string, limit?: number) {
-  const genresList = await getGenresList();
-  const response = await fetch(API_URL + `trending/${mediaType}/${timeWindow}?` + API_KEY, { next: { revalidate: 1800 }, cache: "force-cache" });
-  if (!response.ok) {
-    throw new Error(`getTrendingMedia: HTTP error, status: ${response.status}, message: ${response.statusText}`);
-  }
-
-  const json: TMDBResponse = await response.json();
-  const sorted = json.results
-    .sort((a, b) => b.popularity - a.popularity)
-    .filter((item) => item.vote_average >= 6.5 && item);
-
-  const parsed = sorted.map((media) => mapMedia(media, genresList));
-
-  const media = parsed.slice(0, limit);
-  return media;
-}
-
-export async function getPopularTVshows() {
-  const response = await fetch(API_URL + "discover/tv?sort_by=popularity.desc&without_keywords=155477,158086,179430,160926&" + API_KEY, { next: { revalidate: 1800 }, cache: "force-cache" });
-  if (!response.ok) {
-    throw new Error(`getPopularTVshows: HTTP error, status: ${response.status}, message: ${response.statusText}`);
-  }
-  const data = await response.json();
-  const genresList = await getGenresList();
-  const parsed: Media[] = data.results
-    .map((TVshow: TMDBMedia) => mapMedia(TVshow, genresList))
-    .sort((a: Media, b: Media) => a.popularity - b.popularity)
-    .filter((item: Media) => item.posterPath);
-
+  const parsed = tmdbResponseSchema.parse(await response.json());
   return parsed;
+}
+
+export async function getTrendingMedia(mediaType: "all" | "tv" | "movie", timeWindow: string, limit?: number): Promise<Media[]> {
+  try {
+    const genresList = await getGenresList();
+    const response = await fetch(API_URL + `trending/${mediaType}/${timeWindow}?` + API_KEY, { next: { revalidate: 1800 }, cache: "force-cache" });
+    if (!response.ok) {
+      throw new Error(`getTrendingMedia: HTTP error, status: ${response.status}, message: ${response.statusText}`);
+    }
+
+    const json = tmdbResponseSchema.parse(await response.json());
+    const sorted = json.results
+      .sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0))
+      .filter((item) => (item.vote_average ?? 0) >= 6.5 && item);
+
+    const parsed = sorted.map((media) => mapMedia(media, genresList));
+
+    return parsed.slice(0, limit);
+  } catch (err) {
+    console.error(`getTrendingMedia failed, returning empty list:`, err);
+    return [];
+  }
+}
+
+export async function getPopularTVshows(): Promise<Media[]> {
+  try {
+    const response = await fetch(API_URL + "discover/tv?sort_by=popularity.desc&without_keywords=155477,158086,179430,160926&" + API_KEY, { next: { revalidate: 1800 }, cache: "force-cache" });
+    if (!response.ok) {
+      throw new Error(`getPopularTVshows: HTTP error, status: ${response.status}, message: ${response.statusText}`);
+    }
+    const data = tmdbResponseSchema.parse(await response.json());
+    const genresList = await getGenresList();
+    const parsed: Media[] = data.results
+      .map((TVshow) => mapMedia(TVshow, genresList, "tv"))
+      .sort((a: Media, b: Media) => (a.popularity ?? 0) - (b.popularity ?? 0))
+      .filter((item: Media) => item.posterPath);
+
+    return parsed;
+  } catch (err) {
+    console.error(`getPopularTVshows failed, returning empty list:`, err);
+    return [];
+  }
 }
 
 export async function getMovieById(id: string) {
@@ -116,16 +124,19 @@ export async function getTVshowById(id: string) {
   return mapTVshow(TVshow, credits);
 }
 
-export async function getGenresList() {
+export const getGenresList = cache(async () => {
   const [tvResponse, movieResponse] = await Promise.all([
-    fetch(API_URL + "genre/tv/list?" + API_KEY, { next: { revalidate: 1800 }, cache: "force-cache" }),
-    fetch(API_URL + "genre/movie/list?" + API_KEY, { next: { revalidate: 1800 }, cache: "force-cache" })
+    fetch(API_URL + "genre/tv/list?" + API_KEY, { cache: "force-cache" }),
+    fetch(API_URL + "genre/movie/list?" + API_KEY, { cache: "force-cache" })
   ]);
 
   const [tvData, movieData] = await Promise.all([tvResponse.json(), movieResponse.json()]);
 
+  const tvGenres = tmdbGenreListSchema.parse(tvData);
+  const movieGenres = tmdbGenreListSchema.parse(movieData);
+
   return {
-    tvGenres: tvData.genres as Genre[],
-    movieGenres: movieData.genres as Genre[],
+    tvGenres: tvGenres.genres,
+    movieGenres: movieGenres.genres,
   };
-}
+});

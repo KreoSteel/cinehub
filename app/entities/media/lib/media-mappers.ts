@@ -1,23 +1,24 @@
 import { getGenres } from "@/app/shared/lib/helpers";
+import { TMDBMedia } from "../api/tmdb.schemas";
+import { mapOrganizations, mapProdCountries, mapCreatedBy, mapEpisode, mapSeason, mapMovieCast, mapMovieCrew, mapTVshowCast } from "./map-helpers";
 import { GenreLists, Media } from "@/app/types/media";
 import { Movie, SpokenLanguages } from "@/app/types/movie";
-import { TMDBMedia, TMDBMovie, TMDBCredits, TMDBTVShow, TMDBTvShowAggregateCredits } from "@/app/types/tmdb";
+import { TMDBMovie, TMDBCredits, TMDBTVShow, TMDBTvShowAggregateCredits } from "@/app/types/tmdb";
 import { TVShow } from "@/app/types/tvshow";
-import { mapOrganizations, mapProdCountries, mapCreatedBy, mapEpisode, mapSeason, mapMovieCast, mapMovieCrew, mapTVshowCast } from "./map-helpers";
 
 // Map media/movie/tvshow
-export function mapMedia(media: TMDBMedia, genreLists: GenreLists): Media {
+export function mapMedia(media: TMDBMedia, genreLists: GenreLists, fallbackMediaType: "movie" | "tv" = "movie"): Media {
   return {
     id: media.id,
-    backdropPath: media.backdrop_path,
-    posterPath: media.poster_path,
-    title: media.title ?? media.name,
-    overview: media.overview,
-    mediaType: media.media_type,
-    genres: getGenres(media.genre_ids, media.media_type === "tv" ? genreLists.tvGenres : genreLists.movieGenres),
-    popularity: media.popularity,
-    releaseDate: new Date(media.release_date).getFullYear() || new Date(media.first_air_date).getFullYear(),
-    rating: media.vote_average,
+    backdropPath: media.backdrop_path ?? null,
+    posterPath: media.poster_path ?? null,
+    title: media.title ?? media.name ?? "Untitled",
+    overview: media.overview ?? "",
+    mediaType: media.media_type ?? fallbackMediaType,
+    genres: getGenres(media.genre_ids ?? [], media.media_type === "tv" ? genreLists.tvGenres : genreLists.movieGenres),
+    popularity: media.popularity ?? 0,
+    releaseDate: new Date(media.release_date ?? "").getFullYear() || new Date(media.first_air_date ?? "").getFullYear(),
+    rating: media.vote_average ?? 0,
   };
 }
 
