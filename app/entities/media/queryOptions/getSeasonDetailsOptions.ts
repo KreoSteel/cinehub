@@ -7,9 +7,11 @@ export async function getSeasonDetails(tvShowID: number, seasonNumber: number | 
   }
 
   const response = await fetch(`/api/seasonDetails/${tvShowID}?seasonNumber=${seasonNumber}`)
+
   if (!response.ok) {
     throw new Error(`seasonDetails: HTTP error, status: ${response.status}, message: ${response.statusText}`);
   }
+
   const data = await response.json()
   return data as SeasonDetails
 }

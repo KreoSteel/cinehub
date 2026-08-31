@@ -5,10 +5,11 @@ export async function getSimilarMedia(id: number, mediaType: string) {
   const response = await fetch(`/api/similar/${mediaType}/${id}`)
 
   if (!response.ok) {
-    throw new Error(`seasonDetails: HTTP error, status: ${response.status}, message: ${response.statusText}`);
+    throw new Error(`similarMedia: HTTP error, status: ${response.status}, message: ${response.statusText}`);
   }
+
   const data = await response.json()
-  return data.filter((item: Media) => item.backdropPath) as Media[]
+  return data.filter((item: Media) => item.backdropPath)
 }
 
 export function getSimilarMediaOptions(mediaId: number, mediaType: "tv" | "movie") {
