@@ -1,5 +1,5 @@
 import Tab from "../shared/ui/Tabs";
-import SearchBar from "../shared/ui/SearchBar";
+import SearchBar from "../features/SearchBar/ui/SearchBar";
 import UserAvatar from "../shared/ui/UserAvatar";
 
 export default function Header() {
@@ -13,7 +13,7 @@ export default function Header() {
         {/*Tabs*/}
         <div className="flex h-full gap-6 pl-8 font-medium text-sm">
           <Tab isLinkTab={true} content="Discover" href="/" />
-          <Tab isLinkTab={true} content="Movies" href="/movies" />
+          <Tab isLinkTab={true} content="Movies" href="/movies?page=1" />
           <Tab isLinkTab={true} content="TV shows" href="/tv-shows" />
           <Tab isLinkTab={true} content="Watchlist" href="/watchlist" />
         </div>
