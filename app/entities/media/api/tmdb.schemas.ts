@@ -25,7 +25,7 @@ export const tmdbMediaSchema = z.object({
 export const tmdbResponseSchema = z.object({
   page: z.number(),
   results: z.array(tmdbMediaSchema),
-  total_pages: z.number(),
+  total_pages: z.number().transform(pages => pages > 500 ? 500 : pages),
   total_results: z.number(),
 });
 
