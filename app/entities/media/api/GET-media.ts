@@ -4,14 +4,32 @@ import { mapMedia, mapMovie, mapTVshow } from "../lib/media-mappers";
 import { tmdbGenreListSchema, tmdbResponseSchema } from "./tmdb.schemas";
 import { API_URL, API_KEY } from "@/app/shared/constants/api";
 
-
 export async function getPopularMovies(page: number) {
+  const genresList = await getGenresList();
   const response = await fetch(API_URL + "movie/popular?" + API_KEY + `&page=${page}`, { next: { revalidate: 1800 }, cache: "force-cache" });
   if (!response.ok) {
     throw new Error(`getPopularMovies: HTTP error, status: ${response.status}, message: ${response.statusText}`);
   }
-  const parsed = tmdbResponseSchema.parse(await response.json());
-  return parsed;
+  const parsedResponse = tmdbResponseSchema.parse(await response.json())
+  const movies = parsedResponse.results.map(movie => mapMedia(movie, genresList))
+
+  const { page: currentPage, total_pages: totalPages } = parsedResponse
+
+  return { movies, currentPage, totalPages };
+}
+
+export async function getTopRatedMovies(page: number) {
+  const genresList = await getGenresList();
+  const response = await fetch(API_URL + "movie/top_rated?" + API_KEY + `&page=${page}`, { next: { revalidate: 1800 }, cache: "force-cache" });
+  if (!response.ok) {
+    throw new Error(`getTopRatedMovies: HTTP error, status: ${response.status}, message: ${response.statusText}`);
+  }
+  const parsedResponse = tmdbResponseSchema.parse(await response.json());
+  const movies = parsedResponse.results.map(movies => mapMedia(movies, genresList));
+
+  const { page: currentPage, total_pages: totalPages } = parsedResponse
+
+  return { movies, currentPage, totalPages };
 }
 
 export async function getTrendingMedia(mediaType: "all" | "tv" | "movie", timeWindow: string, limit?: number): Promise<Media[]> {
