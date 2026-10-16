@@ -1,4 +1,4 @@
-# CineHub
+# [CineHub](https://cinehub.kreosteel.dev)
 
 **A movie and TV discovery app — trending titles, search, and rich detail pages powered by TMDB.**
 
@@ -8,7 +8,7 @@
 
 ## About
 
-[CineHub](https://cinehub-hazel-zeta.vercel.app) is a movie and TV discovery app. The home page surfaces what's trending today and this week, the Movies page lets you page through popular titles, and every title gets a detail page with cast, crew, facts, and similar recommendations. TV shows also get a season and episode browser. All data comes from [TMDB](https://www.themoviedb.org/).
+[CineHub](https://cinehub.kreosteel.dev) is a movie and TV discovery app. The home page surfaces what's trending today and this week, the Movies page lets you page through popular titles, and every title gets a detail page with cast, crew, facts, and similar recommendations. TV shows also get a season and episode browser. All data comes from [TMDB](https://www.themoviedb.org/).
 
 Pages render on the server, and a thin layer of internal API routes keeps the TMDB API key off the client for search, similar titles, and season data.
 
