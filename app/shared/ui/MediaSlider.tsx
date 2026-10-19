@@ -11,7 +11,8 @@ interface MediaSliderProps {
 
 export default function MediaSlider({ medias }: MediaSliderProps) {
   useGSAP(() => {
-    gsap.effects.slide(".hero")
+    gsap.effects.slide(".hero");
+    window.scrollTo(0, 0)
   }, []);
 
   const settings = {

@@ -18,13 +18,14 @@ export default function HeroMediaCard({ trendingMedia }: HeroMediaProps) {
       .join(" • ");
 
   return (
-    <div className="relative">
+    <div className="relative h-180">
       <div className="rounded-lg">
         <div className="absolute inset-0 bg-linear-to-t from-black/80 to-black/10 pointer-events-none z-10"></div>
         <Image
-          src={getImage(trendingMedia.backdropPath, "original") || ""}
-          width={1920}
-          height={1080}
+        className="object-cover"
+          src={getImage(trendingMedia.backdropPath, "w1280")}
+          fill
+          sizes="1440px"
           alt={trendingMedia.title}
           loading="eager"
         />
@@ -43,7 +44,7 @@ export default function HeroMediaCard({ trendingMedia }: HeroMediaProps) {
           <h1 className="font-title text-8xl">{trendingMedia.title}</h1>
           <p className="font-inter text-muted-foreground">{trendingMedia.overview}</p>
           <div className="flex gap-4 pt-5">
-            <Link href={`${trendingMedia.mediaType}/${trendingMedia.id}`}>
+            <Link href={`/${trendingMedia.mediaType}/${trendingMedia.id}`}>
               <Button
                 className="transition-all duration-250 text-black/90 bg-white shadow-white/30 shadow-md hover:shadow-amber/30 hover:shadow-lg hover:bg-amber"
                 Icon={<Eye />}
