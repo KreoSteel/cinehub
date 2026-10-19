@@ -1,4 +1,4 @@
-import { Genre } from "./media";
+import { Genre, Media } from "./media";
 
 // Application Types
 export type Movie = {
@@ -24,6 +24,12 @@ export type Movie = {
   productionCompanies: ProductionCompany[];
   productionCountries: ProductionCountry[];
 };
+
+export type AppResponse = {
+  movies: Media[];
+  currentPage: number;
+  totalPages: number;
+}
 
 export type Credits = {
   crew: Crew[];

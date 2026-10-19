@@ -8,8 +8,6 @@ import { Media } from "@/app/types/media";
 import { useRef } from "react";
 import { useGSAP, gsap } from "@/app/shared/lib/gsap";
 
-
-
 interface DiscoverTabsProps {
   trendingWeek: Media[];
   popularTVShows: Media[];

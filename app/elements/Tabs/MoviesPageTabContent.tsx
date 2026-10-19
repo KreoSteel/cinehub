@@ -1,14 +1,13 @@
-import MediaCard from '../../Cards/MediaCard'
+import MediaCard from '../Cards/MediaCard'
 import PaginationComponent from '@/app/shared/ui/Pagination'
-import { getPopularMovies } from '@/app/entities/media/api/GET-media';
+import { AppResponse } from '@/app/types/movie';
 
-interface PopularTabProps {
-  currentPage: number;
+interface MoviesPageTabContentProps {
+  response: AppResponse;
 }
 
-export default async function PopularTab({ currentPage }: PopularTabProps) {
-  const popularMovies = await getPopularMovies(currentPage);
-  const { movies, totalPages } = popularMovies
+export default async function MoviesPageTabContent({ response }: MoviesPageTabContentProps) {
+  const { movies, totalPages, currentPage } = response;
 
   return (
     <>

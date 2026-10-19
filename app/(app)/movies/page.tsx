@@ -1,7 +1,7 @@
 import { pageSchema } from "@/app/shared/lib/schemas/pagination";
 import MoviesPageTabs from "@/app/elements/Tabs/MoviesPageTabs";
-import PopularTab from "@/app/elements/Tabs/MoviesPageTabs/PopularTab";
-import TopRatedTab from "@/app/elements/Tabs/MoviesPageTabs/TopRatedTab";
+import { getNowPlayingMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies } from "@/app/entities/media/api/GET-media";
+import MoviesPageTabContent from "@/app/elements/Tabs/MoviesPageTabContent";
 
 interface MoviesPageProps {
   searchParams?: Promise<{
@@ -22,8 +22,10 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
         <p className="text-muted-foreground">Everything from what&apos;s playing right now to all-time greats.</p>
       </div>
       <MoviesPageTabs active={tab}>
-        {tab === "popular" ? <PopularTab currentPage={currentPage} /> :
-          tab === "top-rated" && <TopRatedTab currentPage={currentPage} />}
+        {tab === "popular" ? <MoviesPageTabContent response={await getPopularMovies(currentPage)} /> :
+          tab === "top-rated" ? <MoviesPageTabContent response={await getTopRatedMovies(currentPage)} /> :
+            tab === "now-playing" ? <MoviesPageTabContent response={await getNowPlayingMovies(currentPage)} /> :
+              tab === "upcoming" && <MoviesPageTabContent response={await getUpcomingMovies(currentPage)} />}
       </MoviesPageTabs>
     </div>
   )

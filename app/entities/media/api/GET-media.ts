@@ -32,6 +32,38 @@ export async function getTopRatedMovies(page: number) {
   return { movies, currentPage, totalPages };
 }
 
+export async function getNowPlayingMovies(page: number) {
+  const genresList = await getGenresList();
+  const response = await fetch(API_URL + `movie/now_playing?language=en-US&page=${page}&` + API_KEY,
+    { next: { revalidate: 1800 }, cache: "force-cache" })
+  if (!response.ok) {
+    throw new Error(`getNowPlayingMovies: HTTP error, status: ${response.status}, message: ${response.statusText}`);
+  }
+
+  const parsedResponse = tmdbResponseSchema.parse(await response.json());
+  const movies = parsedResponse.results.map(movies => mapMedia(movies, genresList));
+
+  const { page: currentPage, total_pages: totalPages } = parsedResponse
+
+  return { movies, currentPage, totalPages };
+}
+
+export async function getUpcomingMovies(page: number) {
+  const genresList = await getGenresList();
+  const response = await fetch(API_URL + `movie/upcoming?language=en-US&page=${page}&` + API_KEY,
+    { next: { revalidate: 1800 }, cache: "force-cache" })
+  if (!response.ok) {
+    throw new Error(`getUpcomingMovies: HTTP error, status: ${response.status}, message: ${response.statusText}`);
+  }
+
+  const parsedResponse = tmdbResponseSchema.parse(await response.json());
+  const movies = parsedResponse.results.map(movies => mapMedia(movies, genresList));
+
+  const { page: currentPage, total_pages: totalPages } = parsedResponse
+
+  return { movies, currentPage, totalPages };
+}
+
 export async function getTrendingMedia(mediaType: "all" | "tv" | "movie", timeWindow: string, limit?: number): Promise<Media[]> {
   try {
     const genresList = await getGenresList();
