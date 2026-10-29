@@ -18,7 +18,7 @@ export default function MediaSlider({ medias }: MediaSliderProps) {
   const settings = {
     nextArrow: <SliderNextArrow />,
     prevArrow: <SliderPreviousArrow />,
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 800,
     autoplaySpeed: 5000,
@@ -30,7 +30,7 @@ export default function MediaSlider({ medias }: MediaSliderProps) {
   return (
     <Slider
       {...settings}
-      className="group hero opacity-0 translate-y-30 pb-auto"
+      className="group hero mx-auto px-6 h-100 md:w-full md:h-full opacity-0 translate-y-30 pb-auto"
     >
       {medias.map((media: Media) => (
         <HeroMediaCard key={media.id} trendingMedia={media} />
