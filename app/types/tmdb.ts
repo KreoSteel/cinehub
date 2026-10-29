@@ -120,6 +120,7 @@ export type TMDBTVShow = {
   status: string;
   tagline: string;
   type: string;
+  mediaType: "tv";
   vote_average: number;
   vote_count: number;
 };

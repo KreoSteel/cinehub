@@ -7,7 +7,7 @@ import { TMDBMovie, TMDBCredits, TMDBTVShow, TMDBTvShowAggregateCredits } from "
 import { TVShow } from "@/app/types/tvshow";
 
 // Map media/movie/tvshow
-export function mapMedia(media: TMDBMedia, genreLists: GenreLists, fallbackMediaType: "movie" | "tv" = "movie"): Media {
+export function mapMedia(media: TMDBMedia, genreLists: GenreLists, fallbackMediaType: "movie" | "tv" | "person" = "movie"): Media {
   return {
     id: media.id,
     backdropPath: media.backdrop_path ?? null,
@@ -81,6 +81,7 @@ export function mapTVshow(tvShow: TMDBTVShow, credits: TMDBTvShowAggregateCredit
     status: tvShow.status,
     tagline: tvShow.tagline,
     type: tvShow.type,
+    mediaType: tvShow.mediaType,
     rating: tvShow.vote_average,
     ratingCount: tvShow.vote_count,
   } : null;

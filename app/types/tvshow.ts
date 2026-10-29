@@ -31,6 +31,7 @@ export type TVShow = {
   status: string;
   tagline: string;
   type: string;
+  mediaType: "tv";
   rating: number;
   ratingCount: number;
 };

@@ -4,7 +4,7 @@ export type Media = {
   posterPath: string | null;
   title: string;
   overview: string;
-  mediaType: string;
+  mediaType: "movie" | "tv" | "person";
   genres: Genre[] | null;
   popularity: number;
   releaseDate: number;
