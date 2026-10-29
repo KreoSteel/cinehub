@@ -13,20 +13,20 @@ export default function MediaCard({ media, mediaType }: MediaCardProps) {
   const firstGenre = media.genres !== null ? media.genres[0] : "";
 
   return (
-    <div className="mediacard opacity-100 px-2 relative group cursor-pointer w-full h-full">
+    <div className="mediacard opacity-100 px-2 relative group cursor-pointer h-full">
       {media.rating ?
-        <span className="absolute right-4 top-2 bg-black/60 rounded-lg z-1000 px-2 py-1 text-xs font-bold text-amber flex items-center gap-1">
+        <span className="absolute right-4 top-2 bg-black/60 rounded-sm z-1000 px-2 py-1 text-xs font-bold text-amber flex items-center gap-1">
           <Star size={12} fill="#fab72a" stroke="#fab72a" />
           <p>{media.rating.toFixed(1)}</p>
         </span> : null}
       <Link href={`/${mediaType}/${media.id}`}>
-        <div className="relative aspect-2/3 overflow-hidden rounded-lg">
+        <div className="relative aspect-2/3 overflow-hidden rounded-sm">
           <Image
             src={getImage(media.posterPath, "w500")}
             alt={media.title}
             fill
-            sizes="400px"
-            className="rounded-lg transition-all duration-400 group-hover:scale-105 object-cover"
+            sizes="(max-width: 768px) 300px"
+            className="rounded-sm transition-all duration-400 group-hover:scale-105 object-cover"
           ></Image>
         </div>
       </Link>

@@ -17,12 +17,10 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
           ? error.message
           : "We couldn't load this page. It might be a temporary connection issue."}
       </p>
-      <Button
-        onClick={() => reset()}
-        className="mt-2 text-black bg-amber hover:bg-amber/90"
-        Icon={<RotateCcw size={18} />}
-        text="Try again"
-      />
+      <Button onClick={() => reset()} className="mt-2 text-black bg-amber hover:bg-amber/90">
+        <RotateCcw size={18} />
+        <p>Try Again</p>
+      </Button>
     </div>
   );
 }
