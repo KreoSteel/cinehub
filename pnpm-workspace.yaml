@@ -1,8 +1,15 @@
 allowBuilds:
+  builds: true
   sharp: true
   unrs-resolver: true
-ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
 minimumReleaseAgeExclude:
   - eslint@10.9.0
+permissions:
+  '@prisma/engines':
+    build: true
+  esbuild:
+    build: true
+  prisma:
+    build: true
+  workerd:
+    build: true
