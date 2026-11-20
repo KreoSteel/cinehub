@@ -10,7 +10,7 @@ const similarParamsSchema = z.object({
   id: z.coerce.number().int().positive(),
 });
 
-export async function GET(req: NextRequest, { params }: { params: Promise<{ mediaType: string, id: string }> }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ mediaType: string, id: string }> }) {
   const parsedParams = similarParamsSchema.safeParse(await params);
 
   if (!parsedParams.success) {

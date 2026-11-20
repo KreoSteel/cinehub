@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { Eye, Play, Plus, Star } from "lucide-react";
+import { Eye, Plus, Star } from "lucide-react";
 import Button from "../../shared/ui/Button";
 import { getImage } from "../../shared/lib/helpers";
 import Link from "next/link";
@@ -48,7 +48,7 @@ export default function HeroMediaCard({ trendingMedia }: HeroMediaProps) {
                 <p>View Details</p>
               </Button>
             </Link>
-            <Link href={`/${trendingMedia.mediaType}/${trendingMedia.id}`}>
+            <Link href="/auth/sign-up">
               <Button
                 className="text-white hidden md:inline-flex transition-all duration-250 shadow-surface-2 shadow-md hover:shadow-surface-2 hover:shadow-lg bg-surface-2 border border-white/10 hover:bg-white/15">
                 <Plus />
