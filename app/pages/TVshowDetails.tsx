@@ -13,7 +13,7 @@ import SeasonsAccordionList from "../elements/MediaDetails/Accordion/SeasonsAcco
 import MoreLikeThisMedia from "../elements/MediaDetails/MoreLikeThisMedia";
 import { useQuery } from "@tanstack/react-query";
 import { getSimilarMediaOptions } from "../entities/media/queryOptions/getSimilarMediaOptions";
-import MoreLikeThisSkeleton from "../elements/EmptyStates/MoreLikeThisSkeleton";
+import MoreLikeThisSkeleton from "../elements/Skeletons/MoreLikeThisSkeleton";
 
 interface TVShowDetailsProps {
   tvshow: TVShow;
