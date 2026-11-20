@@ -1,6 +1,6 @@
 "use client"
 import Tab from "../shared/ui/Tabs";
-import SearchBar from "../features/SearchBar/ui/SearchBar";
+import SearchBar from "../features/SearchMedia/ui/SearchBar";
 import Link from "next/link";
 import MobileNav from "../elements/MobileNav/MobileNav";
 import { useIsMobile } from "@/app/shared/hooks/use-mobile";
@@ -9,8 +9,8 @@ export default function Header() {
   const isMobile = useIsMobile()
 
   return (
-    <header className="sticky w-full top-0 z-10 bg-background/80 flex justify-center px-6 h-18 border-b border-gray-500/20">
-      <div className="flex justify-between h-full font-inter w-screen max-w-7xl px-6">
+    <header className="sticky w-full top-0 z-10 bg-background/80 flex justify-center md:px-6 h-18 border-b border-gray-500/20">
+      <div className="flex justify-between h-full font-inter w-screen max-w-7xl pl-6 pr-2 md:px-6">
         <div className="flex flex-row">
           <Link href="/" id="logo" className="self-center">
             <h2 className="font-title text-3xl text-amber-400">CINEHUB</h2>
