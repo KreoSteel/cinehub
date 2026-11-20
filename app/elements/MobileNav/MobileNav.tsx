@@ -1,13 +1,14 @@
-import SearchBar from "@/app/features/SearchBar/ui/SearchBar";
+import SearchBar from "@/app/features/SearchMedia/ui/SearchBar";
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTrigger } from "@/app/shared/shadcn-ui/drawer";
 import Button from "@/app/shared/ui/Button";
 import MobileNavAuthActions from "./MobileNavAuthActions";
 import MobileNavCards from "./MobileNavCards";
+import { Menu } from "lucide-react";
 
 export default function MobileNav() {
   return (
     <Drawer swipeDirection="down" showSwipeHandle>
-      <DrawerTrigger render={<Button>Open</Button>} />
+      <DrawerTrigger render={<Button><Menu /></Button>} />
       <DrawerContent>
         <DrawerHeader className="rounded-none">
           <SearchBar />
