@@ -2,8 +2,9 @@
 import { Media } from "@/app/types/media"
 import MediaCard from "../Cards/MediaCard"
 import { gsap, useGSAP } from "@/app/shared/lib/gsap"
-import Slider from "react-slick"
 import { useRef } from "react"
+import { Carousel, CarouselContent, CarouselItem } from "@/app/shared/shadcn-ui/carousel"
+import { EmblaOptionsType } from "embla-carousel"
 
 interface MoreLikeThisMediaProps {
   media: Media[]
@@ -17,23 +18,20 @@ export default function MoreLikeThisMedia({ media, mediaType }: MoreLikeThisMedi
     gsap.effects.slide(".mediacard")
   }, { scope: containerRef })
 
-  const settings = {
-    arrows: true,
-    infinite: false,
-    speed: 800,
-    autoplay: false,
-    slidesToShow: 6,
-    slidesToScroll: 5,
+  const settings: EmblaOptionsType = {
+    dragFree: true
   };
 
   return (
-    <div ref={containerRef} className="w-full max-w-7xl mx-auto flex flex-col gap-6 pb-40">
+    <Carousel opts={settings} ref={containerRef} className="w-full max-w-7xl mx-auto flex flex-col gap-6 pb-40">
       <h1 className="font-bold text-5xl tracking-wide font-title text-shadow-lg pl-2">More Like This</h1>
-      <Slider {...settings}>
+      <CarouselContent>
         {media.map(item => (
-          <MediaCard key={item.id} media={item} mediaType={mediaType} />
+          <CarouselItem key={item.id} className="basis-1/2 md:basis-1/5">
+            <MediaCard key={item.id} media={item} mediaType={mediaType} />
+          </CarouselItem>
         ))}
-      </Slider>
-    </div>
+      </CarouselContent>
+    </Carousel>
   )
 }
